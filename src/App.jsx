@@ -22,39 +22,36 @@ export default class App extends React.Component {
     })
   }
 
+  setMessage(message, color) {
+    this.setState({
+      message: message,
+      messageColor : color
+    });
+  }
+
   getResult = () => {
     const number = Number(this.state.number);
     
     if (isNaN(number)) {
-      this.setState({
-        message: 'Nope, ' + this.state.number + ' is not a prime number',
-        messageColor : 'red'
-      });
+      this.setMessage('Nope, ' + this.state.number + ' is not a number', 'red');
       return;
     }
 
-    if (number <= 0 || number % 2 === 0) {
-      this.setState({
-        message: 'Nope, ' + number + ' is not a prime number',
-        messageColor : 'red'
-      });
+    if (number <= 1 || (number > 2 && number % 2 === 0)) {
+      this.setMessage('Nope, ' + number + ' is not a prime number', 'red');
       return;
     }
 
-    for (let i = number - 1; i > 1; i--) {
+    const maxLimit = Math.floor(Math.sqrt(number)) + 1;
+
+    for (let i = 3; i < maxLimit; i++) {
       if (number % i === 0) {
-        this.setState({
-          message: 'Well, ' + number + ' is not a prime number',
-          messageColor : 'red'
-        });
+        this.setMessage('Well, ' + number + ' is not a prime number', 'red');
         return;
       }
     }
 
-    this.setState({
-      message: 'Yes, ' + number + ' is a prime number',
-      messageColor : 'green'
-    });
+    this.setMessage('Yes, ' + number + ' is a prime number', 'green');
   }
 
   render() {
